@@ -5,6 +5,11 @@
     </div>
   <% end %>
 
+  <%= label f, "Author" %>
+  <%# number_input f, :user_id %>
+  <%= select f, :user_id, Enum.map(@users, &{&1.name, &1.id}) %>
+  <%= error_tag f, :user %>
+
   <%= label f, :title %>
   <%= text_input f, :title %>
   <%= error_tag f, :title %>

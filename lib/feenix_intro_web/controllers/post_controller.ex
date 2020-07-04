@@ -3,6 +3,8 @@ defmodule FeenixIntroWeb.PostController do
 
   alias FeenixIntro.Blogs
   alias FeenixIntro.Blogs.Post
+  alias FeenixIntro.Accounts
+  # alias FeenixIntro.Accounts.User
 
   def index(conn, _params) do
     posts = Blogs.list_posts()
@@ -10,8 +12,9 @@ defmodule FeenixIntroWeb.PostController do
   end
 
   def new(conn, _params) do
+    users = Accounts.list_users()
     changeset = Blogs.change_post(%Post{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, users: users)
   end
 
   def create(conn, %{"post" => post_params}) do
@@ -33,8 +36,9 @@ defmodule FeenixIntroWeb.PostController do
 
   def edit(conn, %{"id" => id}) do
     post = Blogs.get_post!(id)
+    users = Accounts.list_users()
     changeset = Blogs.change_post(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+    render(conn, "edit.html", post: post, changeset: changeset, users: users)
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
