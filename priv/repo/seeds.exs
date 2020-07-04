@@ -9,3 +9,15 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias FeenixIntro.Repo
+alias FeenixIntro.Blogs.Post
+alias FeenixIntro.Accounts.User
+
+# reset the datastore
+Repo.delete_all(User) # this should also delete all Posts
+
+# insert people
+me = Repo.insert!(%User{ name: "Nyima", email: "nyima@example.com", username: "nyima" })
+Repo.insert!(%Post{ user_id: me.id, title: "Elixir", body: "Very cool ideas" })
+Repo.insert!(%Post{ user_id: me.id, title: "Phoenix", body: "live is fascinating" })
