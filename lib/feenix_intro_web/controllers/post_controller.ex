@@ -4,11 +4,14 @@ defmodule FeenixIntroWeb.PostController do
   alias FeenixIntro.Blogs
   alias FeenixIntro.Blogs.Post
   alias FeenixIntro.Blogs.Comment
+  # alias FeenixIntro.Blogs.{Post, Comment}
   alias FeenixIntro.Accounts
   # alias FeenixIntro.Accounts.User
 
   def index(conn, _params) do
-    posts = Blogs.list_posts()
+    # posts = Blogs.list_posts()
+    preloads = [:user]
+    posts = Blogs.list_posts(preloads: preloads)
     render(conn, "index.html", posts: posts)
   end
 
@@ -31,7 +34,9 @@ defmodule FeenixIntroWeb.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Blogs.get_post!(id)
+    # post = Blogs.get_post!(id)
+    preloads = [:user, comments: [:user]]
+    post = Blogs.get_post!(id, preloads: preloads)
     users = Accounts.list_users()
     # This allows us to add comments on the Post show form!
     comment_changeset = Blogs.change_comment(%Comment{})

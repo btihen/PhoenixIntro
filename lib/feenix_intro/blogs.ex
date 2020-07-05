@@ -18,6 +18,12 @@ defmodule FeenixIntro.Blogs do
 
   """
   # def list_posts, do: Repo.all(Post)
+  # def list_posts do
+  #   Post
+  #   |> Repo.all()
+  #   |> Repo.preload(:user)
+  # end
+  # def list_posts(opts \\ [:user]) do
   def list_posts(opts \\ []) do
     preloads = Keyword.get(opts, :preloads, [])
     Post
@@ -40,11 +46,20 @@ defmodule FeenixIntro.Blogs do
 
   """
   # def get_post!(id), do: Repo.get!(Post, id)
-  def get_post!(id) do
+  # def get_post!(id) do
+  #   Post
+  #   |> Repo.get!(id)
+  #   |> Repo.preload(:user)
+  #   |> Repo.preload([comments: [:user]])
+  #   # or more succintly:
+  #   # |> Repo.preload([:user, comments: [:user]])
+  # end
+  # def get_post!(id, opts \\ []) do
+  def get_post!(id, opts \\ [:user, comments: [:user]]) do
+    preloads = Keyword.get(opts, :preloads, [])
     Post
     |> Repo.get!(id)
-    |> Repo.preload(:user)
-    |> Repo.preload([comments: [:user]])
+    |> Repo.preload(preloads)
   end
 
   @doc """
@@ -59,6 +74,13 @@ defmodule FeenixIntro.Blogs do
       {:error, %Ecto.Changeset{}}
 
   """
+  # this will work when we have the user logged in and present in the controller
+  # def create_post(%User{} = user, attrs \\ %{}) do
+  #   user
+  #   |> Ecto.build_assoc(:post)
+  #   |> Post.changeset(attrs)
+  #   |> Repo.insert()
+  # end
   def create_post(attrs \\ %{}) do
     %Post{}
     |> Post.changeset(attrs)
@@ -123,7 +145,19 @@ defmodule FeenixIntro.Blogs do
       [%Comment{}, ...]
 
   """
-  def list_comments(opts \\ []), do: Repo.all(Comment)
+  # def list_comment, do: Repo.all(Comment)
+  # def list_comment do
+  #   Comment
+  #   |> Repo.all()
+  #   |> Repo.preload(:user)
+  # end
+  # def list_comments(opts \\ []) do
+  def list_comments(opts \\ [:user]) do
+    preloads = Keyword.get(opts, :preloads, [])
+    Comment
+    |> Repo.all()
+    |> Repo.preload(preloads)
+  end
 
   @doc """
   Gets a single comment.
