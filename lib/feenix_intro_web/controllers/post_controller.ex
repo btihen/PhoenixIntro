@@ -31,7 +31,12 @@ defmodule FeenixIntroWeb.PostController do
 
   def show(conn, %{"id" => id}) do
     post = Blogs.get_post!(id)
-    render(conn, "show.html", post: post)
+    users = Accounts.list_users()
+    # This allows us to add comments on the Post show form!
+    comment_changeset = Blogs.change_comment(%Comment{})
+    render(conn, "show.html", post: post,
+                              users: users,
+                              comment_changeset: comment_changeset)
   end
 
   def edit(conn, %{"id" => id}) do

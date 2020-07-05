@@ -150,16 +150,30 @@ defmodule FeenixIntro.Blogs do
   Creates a comment.
 
   ## Examples
-
-      iex> create_comment(%{field: value})
+      # replace
+      # iex> create_comment(%{field: value})
+      # with
+      iex> create_comment(post, %{field: value})
       {:ok, %Comment{}}
 
-      iex> create_comment(%{field: bad_value})
+      # replace:
+      # iex> create_comment(%{field: bad_value})
+      # with:
+      iex> create_comment(post, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_comment(attrs \\ %{}) do
-    %Comment{}
+  # replace
+  # def create_comment(attrs \\ %{}) do
+  #   %Comment{}
+  #   |> Comment.changeset(attrs)
+  #   |> Repo.insert()
+  # end
+
+  # with (this uses the passed in post and creates an association with the new comment)
+  def create_comment(%Post{} = post, attrs \\ %{}) do
+    post
+    |> Ecto.build_assoc(:comments)
     |> Comment.changeset(attrs)
     |> Repo.insert()
   end

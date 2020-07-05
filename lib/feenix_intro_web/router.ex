@@ -18,7 +18,12 @@ defmodule FeenixIntroWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
-    resources "/posts", PostController
+    # replace this line:
+    # resources "/posts", PostController
+    # with:
+    resources "/posts", PostController do
+      resources "/comments", CommentController, only: [:create]
+    end
   end
 
   # Other scopes may use custom stacks.

@@ -19,6 +19,22 @@
 
 </ul>
 
+<h3>Add a Comment</h3>
+<%= form_for @comment_changeset, Routes.post_comment_path(@conn, :create, @post), fn form -> %>
+
+  <%= label form, "Author" %>
+  <%= select form, :user_id, Enum.map(@users, &{&1.name, &1.id}) %>
+  <%= error_tag form, :user %>
+
+  <%= label form, :message %>
+  <%= textarea form, :message %>
+  <%= error_tag form, :message %>
+
+  <div>
+    <%= submit "Save"%>
+  </div>
+<% end %>
+
 <table>
   <thead>
     <tr>
