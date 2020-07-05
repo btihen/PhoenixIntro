@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Author</th>
       <th>Title</th>
       <th>Body</th>
 
@@ -12,6 +13,7 @@
   <tbody>
 <%= for post <- @posts do %>
     <tr>
+      <td><%= post.user.name %></td>
       <td><%= post.title %></td>
       <td><%= post.body %></td>
 

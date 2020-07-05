@@ -3,6 +3,11 @@
 <ul>
 
   <li>
+    <strong>Author:</strong>
+    <%= @post.user.name %>
+  </li>
+
+  <li>
     <strong>Title:</strong>
     <%= @post.title %>
   </li>

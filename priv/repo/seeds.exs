@@ -18,6 +18,10 @@ alias FeenixIntro.Accounts.User
 Repo.delete_all(User) # this should also delete all Posts
 
 # insert people
-me = Repo.insert!(%User{ name: "Nyima", email: "nyima@example.com", username: "nyima" })
-Repo.insert!(%Post{ user_id: me.id, title: "Elixir", body: "Very cool ideas" })
-Repo.insert!(%Post{ user_id: me.id, title: "Phoenix", body: "live is fascinating" })
+me  = Repo.insert!(%User{ name: "Bill", email: "bill@example.com", username: "bill" })
+dog = Repo.insert!(%User{ name: "Nyima", email: "nyima@example.com", username: "nyima" })
+
+post1 = Repo.insert!(%Post{ user_id: me.id, title: "Elixir", body: "Very cool ideas" })
+post2 = Repo.insert!(%Post{ user_id: me.id, title: "Phoenix", body: "live is fascinating" })
+post3 = Repo.insert!(%Post{ user_id: dog.id, title: "Walk", body: "Woo Hoo!" })
+post4 = Repo.insert!(%Post{ user_id: dog.id, title: "Dinner", body: "Oh Yeh!" })

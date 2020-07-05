@@ -17,8 +17,12 @@ defmodule FeenixIntro.Blogs do
       [%Post{}, ...]
 
   """
-  def list_posts do
-    Repo.all(Post)
+  # def list_posts, do: Repo.all(Post)
+  def list_posts(opts \\ []) do
+    preloads = Keyword.get(opts, :preloads, [])
+    Post
+    |> Repo.all()
+    |> Repo.preload(preloads)
   end
 
   @doc """
@@ -35,7 +39,12 @@ defmodule FeenixIntro.Blogs do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
+  # def get_post!(id), do: Repo.get!(Post, id)
+  def get_post!(id) do
+    Post
+    |> Repo.get!(id)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a post.
