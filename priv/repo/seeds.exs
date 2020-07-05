@@ -12,6 +12,7 @@
 
 alias FeenixIntro.Repo
 alias FeenixIntro.Blogs.Post
+alias FeenixIntro.Blogs.Comment
 alias FeenixIntro.Accounts.User
 
 # reset the datastore
@@ -25,3 +26,10 @@ post1 = Repo.insert!(%Post{ user_id: me.id, title: "Elixir", body: "Very cool id
 post2 = Repo.insert!(%Post{ user_id: me.id, title: "Phoenix", body: "live is fascinating" })
 post3 = Repo.insert!(%Post{ user_id: dog.id, title: "Walk", body: "Woo Hoo!" })
 post4 = Repo.insert!(%Post{ user_id: dog.id, title: "Dinner", body: "Oh Yeh!" })
+
+Repo.insert!(%Comment{user_id: dog.id, post_id: post1.id, message: "woof" })
+
+post2
+|> Ecto.build_assoc(:comments)
+|> Comment.changeset(%{user_id: dog.id, post_id: post2.id, message: "BARK" })
+|> Repo.insert!()
