@@ -1,5 +1,7 @@
 # FeenixIntro
 
+**This is the code to support the learning Phoenix Blog posts at btihen.me**
+
 To start your Phoenix server:
 
   * Setup the project with `mix setup`
