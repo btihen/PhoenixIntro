@@ -22,5 +22,7 @@ defmodule FeenixIntro.Blogs.Comment do
     comment
     |> cast(attrs, @required_fields)
     |> validate_required(@required_fields)
+    |> validate_length(:message, min: 3)
+    # |> validate_length(:message, min: 3, max: 900)
   end
 end
