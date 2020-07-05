@@ -24,5 +24,19 @@ defmodule FeenixIntro.Blogs.Comment do
     |> validate_required(@required_fields)
     |> validate_length(:message, min: 3)
     # |> validate_length(:message, min: 3, max: 900)
+    # |> validate_not_nil(@required_fields)
   end
+
+  # not needed anymore - but interesting way to chech for nils
+  # https://stackoverflow.com/questions/45754213/how-to-make-ecto-changeset-validate-required-accept-blank-values
+  def validate_not_nil(changeset, fields) do
+    Enum.reduce(fields, changeset, fn field, changeset ->
+      if get_field(changeset, field) == nil do
+        add_error(changeset, field, "nil")
+      else
+        changeset
+      end
+    end)
+  end
+
 end
