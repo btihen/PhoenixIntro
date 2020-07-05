@@ -11,6 +11,7 @@ defmodule FeenixIntro.Blogs.Comment do
     # field :user_id, :id
     belongs_to(:user, User)
     belongs_to(:post, Post)
+
     field :message, :string
 
     timestamps()

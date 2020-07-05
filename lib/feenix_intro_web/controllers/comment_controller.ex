@@ -2,6 +2,7 @@ defmodule FeenixIntroWeb.CommentController do
   use FeenixIntroWeb, :controller
 
   alias FeenixIntro.Blogs
+  alias FeenixIntro.Accounts
 
   def create(conn, %{"post_id" => post_id, "comment" => comment_params}) do
     post = Blogs.get_post!(post_id)
@@ -10,11 +11,20 @@ defmodule FeenixIntroWeb.CommentController do
         conn
         |> put_flash(:info, "Comment created")
         |> redirect(to: Routes.post_path(conn, :show, post))
-      # TODO: return to form and show errors
-      {:error, _changeset} ->
+
+      # to handle errors - replace
+      # {:error, _changeset} ->
+      #   conn
+      #   |> put_flash(:error, "Comment creation failed, please fix the errors")
+      #   |> redirect(to: Routes.post_path(conn, :show, post))
+
+      # with:
+      {:error, %Ecto.Changeset{} = changeset} ->
+        users = Accounts.list_users()
         conn
-        |> put_flash(:error, "Comment creation failed")
-        |> redirect(to: Routes.post_path(conn, :show, post))
+        |> put_flash(:error, "Comment creation failed, please fix the errors")
+        |> put_view(FeenixIntroWeb.PostView)  # as of Phoenix 1.5.1
+        |> render("show.html", post: post, users: users, comment_changeset: changeset)
     end
   end
 

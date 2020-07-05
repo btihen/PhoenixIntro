@@ -3,6 +3,7 @@ defmodule FeenixIntroWeb.PostController do
 
   alias FeenixIntro.Blogs
   alias FeenixIntro.Blogs.Post
+  alias FeenixIntro.Blogs.Comment
   alias FeenixIntro.Accounts
   # alias FeenixIntro.Accounts.User
 
