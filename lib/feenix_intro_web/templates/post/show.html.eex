@@ -19,5 +19,22 @@
 
 </ul>
 
+<table>
+  <thead>
+    <tr>
+      <th>Comment Author</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for comment <- @post.comments do %>
+    <tr>
+      <td><%= comment.user.name %></td>
+      <td><%= comment.message %></td>
+    </tr>
+<% end %>
+    </tbody>
+  </table>
+
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
 <span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>

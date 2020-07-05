@@ -44,6 +44,7 @@ defmodule FeenixIntro.Blogs do
     Post
     |> Repo.get!(id)
     |> Repo.preload(:user)
+    |> Repo.preload([comments: [:user]])
   end
 
   @doc """
